@@ -18,12 +18,13 @@ public class TestingService {
 
     public void startTest() throws IOException {
         System.out.println("Prepare to take the test");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        boolean ready = checkReady(br);
-        if (ready) {
-            startTesting(br);
-        } else {
-            endTesting();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            boolean ready = checkReady(br);
+            if (ready) {
+                startTesting(br);
+            } else {
+                endTesting();
+            }
         }
     }
 

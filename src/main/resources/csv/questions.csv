@@ -1,4 +1,4 @@
-questionNumber,question,rightAnswer
+questionNumber,question                                      ,rightAnswer
 1             ,Количество примитивных типов в Java           ,c
 2             ,В какой Java появились дженерики              ,b
 3             ,Есть ли языки которые могут запускаться на Jvm,a

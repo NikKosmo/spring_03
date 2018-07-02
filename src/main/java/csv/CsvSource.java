@@ -29,9 +29,9 @@ public class CsvSource implements TestSource {
             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
             for (CSVRecord record : parser.getRecords()) {
                 Question question = new Question();
-                question.setQuestionNumber(Integer.parseInt(record.get("questionNumber").trim()));
-                question.setQuestion(record.get("question"));
-                question.setRightAnswer(record.get("rightAnswer").charAt(0));
+                question.setQuestionNumber(Integer.parseInt(record.get(0).trim()));
+                question.setQuestion(record.get(1));
+                question.setRightAnswer(record.get(2).charAt(0));
                 result.add(question);
             }
         }
@@ -45,11 +45,11 @@ public class CsvSource implements TestSource {
             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
             for (CSVRecord record : parser.getRecords()) {
                 OptionsHolder holder = new OptionsHolder();
-                holder.setQuestionNumber(Integer.parseInt(record.get("questionNumber").trim()));
+                holder.setQuestionNumber(Integer.parseInt(record.get(0).trim()));
                 Map<String, String> questionsMap = record.toMap();
                 questionsMap.remove("questionNumber");
                 Map<Character, String> questions = new HashMap<>();
-                questionsMap.forEach((key, value) -> questions.put(key.charAt(0), value));
+                questionsMap.forEach((key, value) -> questions.put(key.charAt(0), value.trim()));
                 holder.addOptions(questions);
                 result.add(holder);
             }
