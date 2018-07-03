@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="testSourceReader" class="csv.CsvSource">
+        <property name="questionFilePath" value="./csv/questions.csv"/>
+        <property name="optionsFilePath" value="./csv/options.csv"/>
+    </bean>
+
+    <bean id="testingService" class="tester.TestingService">
+        <constructor-arg name="testSource" ref="testSourceReader"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,10 @@
+**/.idea
+**.iml
+
+# Maven
+**/log/
+**/target/
+
+#common
+**/out
+**.class
