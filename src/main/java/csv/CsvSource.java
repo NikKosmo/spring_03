@@ -5,6 +5,8 @@ import csv.model.Question;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import tester.model.Test;
 
 import java.io.BufferedReader;
@@ -18,7 +20,10 @@ import java.util.Map;
 
 public class CsvSource implements TestSource {
 
+    @Value("${csv.source}")
     private String questionFilePath;
+
+    @Value("${csv.source}")
     private String optionsFilePath;
 
 
