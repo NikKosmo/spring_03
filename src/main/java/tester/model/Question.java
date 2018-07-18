@@ -1,4 +1,4 @@
-package csv.model;
+package tester.model;
 
 public class Question {
     private int questionNumber;
@@ -35,10 +35,10 @@ public class Question {
     }
 
     public void setRightAnswer(char rightAnswer) {
-        this.rightAnswer = rightAnswer;
+        this.rightAnswer = Character.toLowerCase(rightAnswer);
     }
 
     public boolean isAnswerRight(char givenAnswer) {
-        return rightAnswer == givenAnswer;
+        return rightAnswer == Character.toLowerCase(givenAnswer);
     }
 }
