@@ -1,8 +1,9 @@
-package csv.model;
+package tester.model;
 
 public class Question {
     private int questionNumber;
     private String question;
+    private String options;
     private char rightAnswer;
 
     public int getQuestionNumber() {
@@ -21,15 +22,23 @@ public class Question {
         this.question = question;
     }
 
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
+
     public char getRightAnswer() {
         return rightAnswer;
     }
 
     public void setRightAnswer(char rightAnswer) {
-        this.rightAnswer = rightAnswer;
+        this.rightAnswer = Character.toLowerCase(rightAnswer);
     }
 
     public boolean isAnswerRight(char givenAnswer) {
-        return rightAnswer == givenAnswer;
+        return rightAnswer == Character.toLowerCase(givenAnswer);
     }
 }

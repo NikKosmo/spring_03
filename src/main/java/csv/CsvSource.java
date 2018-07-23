@@ -1,10 +1,12 @@
 package csv;
 
-import csv.model.OptionsHolder;
-import csv.model.Question;
+import tester.TestSource;
+import tester.model.OptionsHolder;
+import tester.model.Question;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import tester.model.Test;
 
 import java.io.BufferedReader;
@@ -16,10 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class CsvSource implements TestSource {
 
+    @Value("${csv.source}")
     private String questionFilePath;
-    private String optionsFilePath;
+
+    public CsvSource(String questionFilePath) {
+        this.questionFilePath = questionFilePath;
+    }
 
 
     private List<Question> getQuestions() throws IOException {
@@ -41,15 +48,18 @@ public class CsvSource implements TestSource {
     private List<OptionsHolder> getVariants() throws IOException {
         List<OptionsHolder> result = new ArrayList<>();
         ClassLoader classLoader = getClass().getClassLoader();
-        try (Reader reader = new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream(optionsFilePath), "utf-8"))) {
+        try (Reader reader = new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream(questionFilePath), "utf-8"))) {
             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
             for (CSVRecord record : parser.getRecords()) {
                 OptionsHolder holder = new OptionsHolder();
                 holder.setQuestionNumber(Integer.parseInt(record.get(0).trim()));
-                Map<String, String> questionsMap = record.toMap();
-                questionsMap.remove("questionNumber");
+                String fieldValue = record.get(3);
+                String[] questionsMap = fieldValue.split("\\.");
                 Map<Character, String> questions = new HashMap<>();
-                questionsMap.forEach((key, value) -> questions.put(key.charAt(0), value.trim()));
+                for (String option : questionsMap) {
+                    String[] optionParts = option.split("\\)");
+                    questions.put(optionParts[0].charAt(0), optionParts[1]);
+                }
                 holder.addOptions(questions);
                 result.add(holder);
             }
@@ -58,24 +68,20 @@ public class CsvSource implements TestSource {
     }
 
     @Override
-    public Test getTest() throws IOException {
-        Test result = new Test();
-        List<Question> questions = getQuestions();
-        List<OptionsHolder> variants = getVariants();
-        if (questions.size() != variants.size()) {
-            throw new IllegalArgumentException("Number of Questions and AnswerVariants differ");
+    public Test getTest()  {
+        Test result = null;
+        try {
+            result =new Test();
+            List<Question> questions = getQuestions();
+            List<OptionsHolder> variants = getVariants();
+            if (questions.size() != variants.size()) {
+                throw new IllegalArgumentException("Number of Questions and AnswerVariants differ");
+            }
+            result.addQuestions(questions);
+            result.addVariants(variants);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        result.addQuestions(questions);
-        result.addVariants(variants);
         return result;
     }
-
-    public void setQuestionFilePath(String questionFilePath) {
-        this.questionFilePath = questionFilePath;
-    }
-
-    public void setOptionsFilePath(String optionsFilePath) {
-        this.optionsFilePath = optionsFilePath;
-    }
-
 }

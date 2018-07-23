@@ -1,4 +1,4 @@
-package csv.model;
+package tester.model;
 
 import java.util.HashMap;
 import java.util.Map;
