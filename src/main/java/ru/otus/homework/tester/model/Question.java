@@ -1,4 +1,4 @@
-package tester.model;
+package ru.otus.homework.tester.model;
 
 public class Question {
     private int questionNumber;
