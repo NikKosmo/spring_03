@@ -1,5 +1,6 @@
 package ru.otus.homework.tester.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,10 @@ public class OptionsHolder {
 
     public void addOptions(Map<Character, String> options) {
         this.options.putAll(options);
+    }
+
+    public Map<Character, String> getOptions(){
+        return Collections.unmodifiableMap(options);
     }
 
     @Override
