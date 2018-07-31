@@ -1,9 +1,10 @@
-package tester;
+package ru.otus.homework.tester;
 
 import org.springframework.context.MessageSource;
-import tester.model.OptionsHolder;
-import tester.model.Question;
-import tester.model.Test;
+import org.springframework.stereotype.Service;
+import ru.otus.homework.tester.model.OptionsHolder;
+import ru.otus.homework.tester.model.Question;
+import ru.otus.homework.tester.model.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@Service
 public class TestingServiceImpl implements TestingService {
 
     private Test test;
@@ -44,7 +46,7 @@ public class TestingServiceImpl implements TestingService {
     }
 
     public void startTest() {
-        System.out.println(messageSource.getMessage("user.start", null,  Locale.ENGLISH));
+        System.out.println(messageSource.getMessage("user.start", null,  Locale.getDefault()));
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             boolean ready = checkReady(br);
             if (ready) {
@@ -58,12 +60,12 @@ public class TestingServiceImpl implements TestingService {
     }
 
     private void endTesting() {
-        System.out.println(messageSource.getMessage("user.bye", null,  Locale.ENGLISH));
+        System.out.println(messageSource.getMessage("user.bye", null,  Locale.getDefault()));
     }
 
     private void startTesting(BufferedReader br) throws IOException {
         String studentName = getStudentName(br);
-        System.out.println(messageSource.getMessage("user.hello", new String[]{studentName}, Locale.ENGLISH));
+        System.out.println(messageSource.getMessage("user.hello", new String[]{studentName}, Locale.getDefault()));
         runTest(br);
     }
 
@@ -72,7 +74,7 @@ public class TestingServiceImpl implements TestingService {
         for (Question question : getQuestions()) {
             System.out.println(question.getQuestion());
             System.out.println(getOptions(question.getQuestionNumber()));
-            System.out.println(messageSource.getMessage("select.variant", null,  Locale.ENGLISH));
+            System.out.println(messageSource.getMessage("select.variant", null,  Locale.getDefault()));
             char answer = getAnswer(br);
             answers.put(question.getQuestionNumber(), answer);
         }
@@ -85,7 +87,7 @@ public class TestingServiceImpl implements TestingService {
     }
 
     private String getStudentName(BufferedReader br) throws IOException {
-        System.out.println(messageSource.getMessage("user.name", null,  Locale.ENGLISH));
+        System.out.println(messageSource.getMessage("user.name", null,  Locale.getDefault()));
         return br.readLine();
     }
 
@@ -94,7 +96,7 @@ public class TestingServiceImpl implements TestingService {
         boolean answeredCorrectly = false;
         boolean ready = false;
         do {
-            System.out.println(messageSource.getMessage("user.ready", null,  Locale.ENGLISH));
+            System.out.println(messageSource.getMessage("user.ready", null,  Locale.getDefault()));
             String readyString = br.readLine();
             if (readyString.equalsIgnoreCase("y")) {
                 answeredCorrectly = true;

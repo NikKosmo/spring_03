@@ -1,4 +1,4 @@
-package tester.model;
+package ru.otus.homework.tester.model;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
-package tester;
+package ru.otus.homework.tester;
 
-import tester.model.OptionsHolder;
-import tester.model.Question;
+import ru.otus.homework.tester.model.OptionsHolder;
+import ru.otus.homework.tester.model.Question;
 
 import java.util.Collection;
 import java.util.Map;

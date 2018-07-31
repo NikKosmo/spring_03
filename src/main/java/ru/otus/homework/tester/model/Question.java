@@ -1,9 +1,8 @@
-package tester.model;
+package ru.otus.homework.tester.model;
 
 public class Question {
     private int questionNumber;
     private String question;
-    private String options;
     private char rightAnswer;
 
     public int getQuestionNumber() {
@@ -20,14 +19,6 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public String getOptions() {
-        return options;
-    }
-
-    public void setOptions(String options) {
-        this.options = options;
     }
 
     public char getRightAnswer() {

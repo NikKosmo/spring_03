@@ -1,13 +1,14 @@
-package csv;
+package ru.otus.homework.csv;
 
-import tester.TestSource;
-import tester.model.OptionsHolder;
-import tester.model.Question;
+import org.springframework.stereotype.Component;
+import ru.otus.homework.configuration.TestConfiguration;
+import ru.otus.homework.tester.TestSource;
+import ru.otus.homework.tester.model.OptionsHolder;
+import ru.otus.homework.tester.model.Question;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Value;
-import tester.model.Test;
+import ru.otus.homework.tester.model.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,13 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 
+@Component
 public class CsvSource implements TestSource {
 
-    @Value("${csv.source}")
     private String questionFilePath;
 
-    public CsvSource(String questionFilePath) {
-        this.questionFilePath = questionFilePath;
+    public CsvSource(TestConfiguration configuration) {
+        this.questionFilePath = configuration.getQuestionFilePath();
     }
 
 
@@ -68,10 +69,10 @@ public class CsvSource implements TestSource {
     }
 
     @Override
-    public Test getTest()  {
+    public Test getTest() {
         Test result = null;
         try {
-            result =new Test();
+            result = new Test();
             List<Question> questions = getQuestions();
             List<OptionsHolder> variants = getVariants();
             if (questions.size() != variants.size()) {
