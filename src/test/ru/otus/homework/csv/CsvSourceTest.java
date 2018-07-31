@@ -1,10 +1,12 @@
 package ru.otus.homework.csv;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.shell.Shell;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.homework.configuration.TestConfiguration;
 import ru.otus.homework.tester.model.Question;
@@ -32,8 +34,7 @@ public class CsvSourceTest {
         assertEquals("Количество примитивных типов в Java", question.getQuestion().trim());
         assertTrue(testFromSource.getQuestion(1).isAnswerRight('c'));
         assertFalse(testFromSource.getQuestion(1).isAnswerRight('b'));
-        String resultDummy = "Out of %d questions you've answered %d questions right";
-        assertEquals(String.format(resultDummy, 1, 1), testFromSource.submitAnswers(Collections.singletonMap(1, 'c')));
-        assertEquals(String.format(resultDummy, 1, 0), testFromSource.submitAnswers(Collections.singletonMap(1, 'b')));
+        assertEquals(Collections.singletonMap(1, 1), testFromSource.submitAnswers(Collections.singletonMap(1, 'c')));
+        assertEquals(Collections.singletonMap(1, 0), testFromSource.submitAnswers(Collections.singletonMap(1, 'b')));
     }
 }

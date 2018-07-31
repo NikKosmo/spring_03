@@ -8,9 +8,7 @@ import ru.otus.homework.tester.TestingService;
 
 @SpringBootApplication
 public class Main {
-    public static void main(String[] args)  {
-        ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
-        TestingService testingService = context.getBean(TestingService.class);
-        testingService.startTest();
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
     }
 }

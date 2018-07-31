@@ -1,9 +1,6 @@
 package ru.otus.homework.tester.model;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Test {
 
@@ -34,13 +31,12 @@ public class Test {
         return questionMap.get(questionNumber).isAnswerRight(answer);
     }
 
-    public String submitAnswers(Map<Integer, Character> answers) {
+    public Map<Integer, Integer> submitAnswers(Map<Integer, Character> answers) {
         long rightAnswersCount = answers.entrySet()
                 .stream()
                 .filter(e -> submitAnswer(e.getKey(), e.getValue()))
                 .count();
-        return String.format("Out of %d questions you've answered %d questions right",
-                questionMap.size(), rightAnswersCount);
+        return Collections.singletonMap(questionMap.size(), (int) rightAnswersCount);
     }
 
 }

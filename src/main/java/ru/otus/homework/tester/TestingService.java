@@ -14,7 +14,5 @@ public interface TestingService {
 
     OptionsHolder getOptions(int questionNumber);
 
-    String submitAnswers(Map<Integer, Character> answers);
-
-    void startTest();
+    Map<Integer, Integer> submitAnswers(Map<Integer, Character> answers);
 }
